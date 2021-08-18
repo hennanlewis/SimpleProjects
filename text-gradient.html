@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet"> 
+	<title>Texto</title>
+
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		body {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			background-color: #BB2020;
+		}
+
+		main {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			max-width: 90%;
+		}
+
+		#options,
+		#output {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		#options div {
+			display: flex;
+			gap: 15px;
+		}
+
+		#options fieldset {
+			display: flex;
+			flex-direction: column;
+			padding: 5px 15px 10px;
+			border-radius: 10px;
+			color: #FFF;
+			gap: 3px;
+		}
+
+		#options fieldset legend {
+			margin-left: 15px;
+		}
+
+		#options fieldset label {
+			display: flex;
+			align-items: center;
+			min-width: 70px;
+			gap: 5px;
+		}
+		
+		#color1, #color2, #color3 {
+			border: none;
+			background: none;
+			height: 20px;
+			width: 20px;
+		}
+
+		#output {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 50px;
+			width: 50%;
+			font-size: 300%;
+			font-weight: bold;
+			word-break: break-all;
+			box-sizing: border-box;
+
+			background-color: #000000;
+			background-image: linear-gradient(0deg, #000000, #000000);
+			background-size: 100%;
+			-webkit-background-clip: text;
+			-moz-background-clip: text;
+			-webkit-text-fill-color: transparent; 
+			-moz-text-fill-color: transparent;
+		}
+		svg {
+			filter: drop-shadow(2px 2px 2px #000);
+			font-family: 'Lobster', cursive;
+		}
+	</style>
+</head>
+
+<body>
+	<section id="options">
+		<input id="input" type="text" oninput="handleOutput(event)" placeholder="Digite o texto aqui">
+		<div>
+			<fieldset>
+				<legend>Formats</legend>
+				<label for="format1">
+					<input id="format1" type="radio" name="format" onchange="handleFormats()" value="normal" /><span>Normal</span>
+				</label>
+				<label for="format2">
+					<input id="format2" type="radio" name="format" onchange="handleFormats()" value="uppercase" /><span>Uppercase</span>
+				</label>
+				<label for="format3">
+					<input id="format3" type="radio" name="format" onchange="handleFormats()" value="lowercase"/><span>Lowercase</span>
+				</label>
+				<label for="format4">
+					<input id="format4" type="radio" name="format" onchange="handleFormats()" value="capitalize" /><span>Capitalize</span>
+				</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Colors</legend>
+				<label for="">
+					<input id="color1" type="color" name="color1" onchange="handleColors()" value="#000000" /><span>Cor 1</span>
+				</label>
+				<label for="">
+					<input id="color2" type="color" name="color2" onchange="handleColors()" value="#000000" /><span>Cor 2</span>
+				</label>
+				</label>
+				<label for="">
+					<input id="color3" type="color" name="color3" onchange="handleColors()" value="#000000" /><span>Cor 3</span>
+				</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Stroke</legend>
+				<label for="">
+					<input id="colorStroke" type="color" name="color1" onchange="handleColors()" value="#000000" /><span>Cor 1</span>
+				</label>
+			</fieldset>
+		</div>
+	</section>
+
+	<svg id="svgImagem" width="1280" height="400" viewbox="0 0 1280 400">
+		<style>
+			text {
+				font-size: 500%;
+				font-weight: bold;
+			}
+		</style>
+		<defs>
+			<LinearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+				<stop offset="0%" stop-color="#ffffff" />
+				<stop offset="40%" stop-color="#ffffff" />
+				<stop offset="100%" stop-color="#ffffff" />
+			</LinearGradient>
+		</defs>
+		<text id="svgTexto" 
+			x="50%" y="50%" 
+			fill="url(#gradient)"
+			stroke="black" stroke-width="10" stoke-linejoin="round"
+			dominant-baseline="middle" text-anchor="middle"
+		>Resultado</text>
+		<text id="svgTexto2" 
+			x="50%" y="50%" 
+			fill="url(#gradient)"
+			dominant-baseline="middle" text-anchor="middle"
+		>Resultado</text>
+	</svg>
+
+	<script>
+		let input = document.querySelector('#input')
+		let formats = document.querySelectorAll('input[name="format"]')
+		let color1 = document.querySelector('#color1')
+		let color2 = document.querySelector('#color2')
+		let svgTexto = document.querySelector("#svgTexto")
+		let svgTexto2 = document.querySelector("#svgTexto2")
+		let texto = 'Resultado'
+
+		const handleOutput = () => {
+			input.value ? svgTexto.textContent = input.value : svgTexto.textContent = texto
+			input.value ? svgTexto2.textContent = input.value : svgTexto2.textContent = texto
+			handleFormats()
+		}
+
+		const handleFormats = () => {
+			let formatValue = Array.from(formats).filter(item => item.checked)[0].value
+			if(formatValue == 'normal') {
+				input.value ? svgTexto.textContent = input.value : svgTexto.textContent = texto
+				input.value ? svgTexto2.textContent = input.value : svgTexto2.textContent = texto
+				return
+			}
+			if(formatValue == 'uppercase') {
+				input.value ? svgTexto.textContent = input.value.toUpperCase() : svgTexto.textContent = texto.toUpperCase()
+				input.value ? svgTexto2.textContent = input.value.toUpperCase() : svgTexto2.textContent = texto.toUpperCase()
+				return
+			}
+			if(formatValue == 'lowercase') {
+				input.value ? svgTexto.textContent = input.value.toLowerCase() : svgTexto.textContent = texto.toLowerCase()
+				input.value ? svgTexto2.textContent = input.value.toLowerCase() : svgTexto2.textContent = texto.toLowerCase()
+				return
+			}
+			if(formatValue == 'capitalize') {
+				const lower = input.value.toLowerCase()
+				input.value ?
+				svgTexto.textContent = input.value.charAt(0).toUpperCase() + lower.slice(1) : 
+				svgTexto.textContent = texto.charAt(0).toUpperCase() + texto.slice(1)
+				input.value ?
+					svgTexto2.textContent = input.value.charAt(0).toUpperCase() + lower.slice(1) : 
+					svgTexto2.textContent = texto.charAt(0).toUpperCase() + texto.slice(1)
+				return
+			}
+		}
+
+		const handleColors = () => {
+			let gradientColor1 = document.querySelectorAll("linearGradient stop")[0]
+			let gradienteColor2 = document.querySelectorAll("linearGradient stop")[1]
+			let gradienteColor3 = document.querySelectorAll("linearGradient stop")[2]
+
+			gradientColor1.setAttribute("stop-color", color1.value)
+			gradienteColor2.setAttribute("stop-color", color2.value)
+			gradienteColor3.setAttribute("stop-color", color3.value)
+		}
+	</script>
+</body>
+
+</html>
