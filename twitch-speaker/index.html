@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Twitch chat speaker</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		#content {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 100vw;
+			height: 100vh;
+			background-color: #5400a2;
+			gap: 10px
+		}
+		#channelName {
+			padding: 15px 30px;
+			width: 400px;
+			background-color: #232323;
+			border-radius: 10px;
+			box-shadow: 0px 3px 5px #232323;
+			overflow: hidden;
+		}
+		#channelName form {
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+		}
+		#channelName input {
+			background-color: #232323;
+			flex: 1;
+			border: none;
+			color: #888;
+		}
+		#externalBox {
+			display: flex;
+			padding: 20px;
+			width: 400px;
+			height: 300px;
+			color: #fff;
+			background-color: #232323;
+			border-radius: 10px;
+			box-shadow: 0px 3px 5px #232323;
+			overflow: hidden;
+		}
+		#messageBox {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			margin-left: 10px;
+			overflow-y: auto;
+			gap: 5px;
+		}
+		.user {
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<div id="channelName" for="input">
+			<form id="form">
+				<input id="input" placeholder="Digite o nome do canal aqui">
+				<button type="submit">Selecionar canal</button>
+			</form>
+		</div>
+		<section id="externalBox">
+			<main id="messageBox">
+				<span class="user">Ainda não possui mensagens</span>
+			</main>
+		</section>
+	</div>
+	<script src="tmi.min.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>
