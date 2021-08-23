@@ -11,7 +11,7 @@
 			padding: 0;
 			box-sizing: border-box;
 		}
-		#content {
+		#background {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -21,12 +21,25 @@
 			background-color: #5400a2;
 			gap: 10px
 		}
-		#channelName {
+		#content {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+		.section {
+			display: flex;
+			flex-direction: column;
 			padding: 15px 30px;
 			width: 400px;
 			background-color: #232323;
+			color: #fff;
 			border-radius: 10px;
 			box-shadow: 0px 3px 5px #232323;
+			gap: 10px;
+		}
+		.section span { margin: 0 10px 0 3px; }
+		.section span.label { margin-right: 2px; }
+		#channelName {
 			overflow: hidden;
 		}
 		#channelName form {
@@ -65,18 +78,39 @@
 	</style>
 </head>
 <body>
-	<div id="content">
-		<div id="channelName" for="input">
-			<form id="form">
-				<input id="input" placeholder="Digite o nome do canal aqui">
-				<button type="submit">Selecionar canal</button>
-			</form>
+	<div id="background">
+		<div id="content">
+			<section id="channelName" class="section">
+				<form id="form">
+					<input id="input" placeholder="Digite o nome do canal aqui">
+					<button type="submit">Selecionar canal</button>
+				</form>
+			</section>
+			<section id="externalBox">
+				<main id="messageBox">
+					<span class="user">Ainda não possui mensagens</span>
+				</main>
+			</section>
+			<section class="section">
+				<label for="speaker">
+					<span class="label">Leitura:</span>
+					<select id="speaker" name="speaker">
+						<option value="nothing" checked>Não ler</option>
+						<option value="username">Nome de usuário</option>
+						<option value="message">Mensagem</option>
+						<option value="all">Usuário e mensagem</option>
+					</select>
+				</label>
+				<label for="speed">
+					<span class="label">Velocidade:</span> 
+					<input type="radio" name="speed" value="1" checked><span>1x</span>
+					<input type="radio" name="speed" value="1.5" ><span>1.5x</span>
+					<input type="radio" name="speed" value="2" ><span>2x</span>
+					<input type="radio" name="speed" value="2.5" ><span>2.5x</span>
+					<input type="radio" name="speed" value="3" ><span>3x</span>
+				</label>
+			</section>
 		</div>
-		<section id="externalBox">
-			<main id="messageBox">
-				<span class="user">Ainda não possui mensagens</span>
-			</main>
-		</section>
 	</div>
 	<script src="tmi.min.js"></script>
 	<script src="app.js"></script>
