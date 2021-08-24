@@ -17,10 +17,14 @@ fullscreenIcon.addEventListener('click', () => {
 	let options = document.querySelector('#options')
 	options.classList.toggle("fullscreen")
 	setTimeout(() => {
-		(options.className === "fullscreen") ?
+		options.className === "fullscreen" ?
 			options.style.display = "none" :
-			options.style.display = "flex" 
+			options.style.display = "flex"
+		options.className === "fullscreen" ?
+			document.querySelector('html').requestFullscreen() :
+			document.exitFullscreen()
 	}, options.className === "fullscreen" ? 500 : 0)
+
 })
 
 const handleFormats = () => {
