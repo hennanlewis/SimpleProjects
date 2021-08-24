@@ -1,0 +1,29 @@
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	min-height: 100vh;
+	background: linear-gradient(#223, #000);
+}
+main {
+	padding: 20px 35px;
+	background-color: #fff;
+	border: 5px solid #000A;
+	border-radius: 20px;
+	box-shadow: 0 0 5px #000,
+		inset 0 0 10px #000;
+}
+main ul {
+	padding: 10px;
+}

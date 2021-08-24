@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+	<title>Texto Gradiente</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+	<span id="fullscreen"><img src="fullscreen_black_24dp.svg" alt=""></span>
+	<section id="options">
+		<input id="input" type="text" oninput="handleOutput(event)" placeholder="Digite o texto aqui">
+		<div class="line">
+			<fieldset>
+				<legend>Formatos</legend>
+				<label for="format1">
+					<input id="format1" type="radio" name="format" onchange="handleFormats()" value="normal" />
+					<span>Normal</span>
+				</label>
+				<label for="format2">
+					<input id="format2" type="radio" name="format" onchange="handleFormats()" value="uppercase" />
+					<span>MAIÚSCULAS</span>
+				</label>
+				<label for="format3">
+					<input id="format3" type="radio" name="format" onchange="handleFormats()" value="lowercase"/>
+					<span>minúsculas</span>
+				</label>
+				<label for="format4">
+					<input id="format4" type="radio" name="format" onchange="handleFormats()" value="capitalize" />
+					<span>Capitalize</span>
+				</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Cores</legend>
+				<label for="">
+					<input id="color1" type="color" name="color1" onchange="handleColors()" value="#ffffff" />
+					<span>Cor 1</span>
+				</label>
+				<label for="">
+					<input id="color2" type="color" name="color2" onchange="handleColors()" value="#ffffff" />
+					<span>Cor 2</span>
+				</label>
+				</label>
+				<label for="">
+					<input id="color3" type="color" name="color3" onchange="handleColors()" value="#ffffff" />
+					<span>Cor 3</span>
+				</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Fundo</legend>
+				<label for="">
+					<input id="colorBG1" type="color" name="color1" onchange="handleColors()" value="#bb2020" />
+					<span>Cor 1</span>
+				</label>
+				<label for="">
+					<input id="colorBG2" type="color" name="color1" onchange="handleColors()" value="#bb2020" />
+					<span>Cor 2</span>
+				</label>
+			</fieldset>
+		</div>
+		<div class="line">
+		</div>
+	</section>
+
+	<svg id="svgImagem" width="1280" height="400" viewbox="0 0 1280 400">
+		<style>
+			text {
+				font-size: 500%;
+				font-weight: bold;
+			}
+		</style>
+		<defs>
+			<LinearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+				<stop offset="20%" stop-color="#ffffff" />
+				<stop offset="40%" stop-color="#ffffff" />
+				<stop offset="70%" stop-color="#ffffff" />
+			</LinearGradient>
+		</defs>
+		<text id="svgTexto"
+			x="50%" y="50%"
+			fill="url(#gradient)"
+			stroke="black" stroke-width="10" stoke-linejoin="round"
+			dominant-baseline="middle" text-anchor="middle"
+		>Resultado</text>
+		<text id="svgTexto2"
+			x="50%" y="50%"
+			fill="url(#gradient)"
+			dominant-baseline="middle" text-anchor="middle"
+		>Resultado</text>
+	</svg>
+
+	<script src="app.js"></script>
+</body>
+
+</html>
