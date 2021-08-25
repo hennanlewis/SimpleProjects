@@ -24,7 +24,6 @@ fullscreenIcon.addEventListener('click', () => {
 			document.querySelector('html').requestFullscreen() :
 			document.exitFullscreen()
 	}, options.className === "fullscreen" ? 500 : 0)
-
 })
 
 const handleFormats = () => {

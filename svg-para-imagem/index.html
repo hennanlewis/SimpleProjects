@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:700' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+	<svg width="256" height="256" id="icon">
+		<defs>
+			<style>
+				@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+				.font {
+					color: #ffffff;
+					font-family: Roboto;
+					font-weight: bold;
+					text-transform: uppercase;
+				}
+	
+				.name {
+					font-size: 64pt;
+				}
+	
+				.top-bar-text {
+					font-size: 32pt;
+				}
+			</style>
+
+			<font id="Font1" horiz-adv-x="1000">
+				<font-face font-family="Roboto" font-weight="bold" font-style="normal" units-per-em="1000"
+					cap-height="600" x-height="400" ascent="700" descent="300" alphabetic="0" mathematical="350"
+					ideographic="400" hanging="500">
+					<font-face-src>
+						<font-face-name name="Roboto Bold" />
+					</font-face-src>
+				</font-face>
+				<missing-glyph>
+					<path d="M0,0h200v200h-200z" />
+				</missing-glyph>
+				<glyph unicode="!" horiz-adv-x="300">
+					<!-- Outline of exclam. pt. glyph -->
+				</glyph>
+				<glyph unicode="@">
+					<!-- Outline of @ glyph -->
+				</glyph>
+				<!-- more glyphs -->
+			</font>
+		</defs>
+
+
+		<rect class="bg1" id="bg_color_1" x="0" y="0" width="256" height="256" fill="#4cbc5a" />
+		<path class="bg2" id="bg_color_2" d="M 0 96 L0,256 L256,256 L256,96 s -128 96 -256 0" fill="#08a21c" />
+		<text id="left_corner_text" x="24" y="36" width="48" height="64" class="top_bar lct font top-bar-text"
+			text-anchor="middle" fill="#ffffff" font-family="Roboto">
+			<tspan>1</tspan>
+		</text>
+		<text id="right_corner_text" x="232" y="36" width="48" height="64" class="top_bar rct font top-bar-text"
+			text-anchor="middle" fill="#ffffff">
+			<tspan>2</tspan>
+		</text>
+		<text id="line_1_text" transform="scale(1,2)" x="128" y="90" width="256" height="192" class="l1t font name"
+			text-anchor="middle" fill="#ffffff">
+			<tspan>ABC</tspan>
+		</text>
+	</svg>
+	<button>svg to png</button>
+
+	<canvas id="canvas" width="256" height="256"></canvas>
+	<script>
+		var btn = document.querySelector('button');
+		var svg = document.querySelector('svg');
+		var canvas = document.querySelector('canvas');
+
+		function triggerDownload(imgURI) {
+			var evt = new MouseEvent('click', {
+				view: window,
+				bubbles: false,
+				cancelable: true
+			});
+
+			var a = document.createElement('a');
+			a.setAttribute('download', 'MY_COOL_IMAGE.png');
+			a.setAttribute('href', imgURI);
+			a.setAttribute('target', '_blank');
+
+			a.dispatchEvent(evt);
+		}
+
+		btn.addEventListener('click', function () {
+			var canvas = document.getElementById('canvas');
+			var ctx = canvas.getContext('2d');
+			var data = (new XMLSerializer()).serializeToString(svg);
+			var DOMURL = window.URL || window.webkitURL || window;
+
+			var img = new Image();
+			var svgBlob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
+			var url = DOMURL.createObjectURL(svgBlob);
+
+			img.onload = function () {
+				ctx.drawImage(img, 0, 0);
+				DOMURL.revokeObjectURL(url);
+
+				var imgURI = canvas
+					.toDataURL('image/png')
+					.replace('image/png', 'image/octet-stream');
+
+				triggerDownload(imgURI);
+			};
+
+			img.src = url;
+		});
+	</script>
+</body>
+
+</html>
