@@ -17,12 +17,18 @@ body {
 	background: linear-gradient(#223, #000);
 }
 main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	padding: 20px 35px;
 	background-color: #fff;
 	border: 5px solid #000A;
 	border-radius: 20px;
 	box-shadow: 0 0 5px #000,
 		inset 0 0 10px #000;
+}
+main h3 {
+	align-self: center;
 }
 main ul {
 	padding: 10px;
