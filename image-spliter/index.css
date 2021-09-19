@@ -14,15 +14,16 @@ body {
 	flex-direction: column;
 	align-items: center;
 	padding: 1rem;
+	gap: 10px;
 }
 
 #upload-file {
 	display: none;
 }
 
-.buttons,
-.buttons-blue,
-.buttons-green {
+.button,
+.button-blue,
+.button-green {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -38,7 +39,7 @@ body {
 	cursor: pointer;
 }
 
-.buttons-green {
+.button-green {
 	color: #fff;
 	background: linear-gradient(#00a456 60%,#008c35);
 	border: 2px solid #085f33;
@@ -46,7 +47,7 @@ body {
 	box-shadow: inset 0px 0px 10px #075e32;
 }
 
-.buttons-blue {
+.button-blue {
 	color: #fff;
 	background: linear-gradient(#5779ff 60%,#365cef);
 	border: 2px solid #334a8b;
@@ -54,8 +55,8 @@ body {
 	box-shadow: inset 0px 0px 10px #334a8b;
 }
 
-.buttons:hover,
-.buttons-blue:hover,
-.buttons-green:hover {
+.button:hover,
+.button-blue:hover,
+.button-green:hover {
 	filter: brightness(1.2);
 }
