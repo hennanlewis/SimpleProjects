@@ -1,68 +1,64 @@
-const uploadedFile = document.querySelector("#upload-file")
-let preview = document.querySelector("#preview")
-let image, pic
+const fileInput = document.querySelector('#input-file')
+const inputLabel = document.querySelector('#input-label')
+const saveAll = document.querySelector('#save-all')
+const preview = document.querySelector('#preview-content')
+const teste = document.querySelector('#preview')
 
+let imageNames = []
+let image
 let canvas = document.createElement('canvas')
 let ctx = canvas.getContext('2d')
 
 window.addEventListener('DOMContentLoaded', () => {
-	uploadedFile.addEventListener('change', () => {
-		let file = uploadedFile.files.item(0)
-		pic = file.name
+	fileInput.addEventListener('change', () => {
+		let files = fileInput.files
 
-		let reader = new FileReader()
-		reader.readAsDataURL(file)
-		reader.onload = (event) => {
-			image = new Image()
-			image.src = event.target.result
-			image.onload = onLoadImage
-		}
+		if (files)
+			[].forEach.call(files, readAndPreview)
 	})
+
 })
 
-function onLoadImage() {
-	const { width, height } = image
-	canvas.width = width;
-	canvas.height = height;
+const readAndPreview = file => {
+	let reader = new FileReader()
+	reader.readAsDataURL(file)
+
+	if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+		saveAll.style.display = 'block'
+
+		imageNames.push(file.name.replace(/\.(jpe?g|png|gif)$/i, ''))
+		reader.onload = function() {
+			image = new Image()
+			image.title = file.name
+			image.src = reader.result
+			createCanvas()
+		}
+	}
+}
+
+const createCanvas = () => {
+	let { width, height } = image
+
+	canvas.width = width
+	canvas.height = height
 
 	ctx.clearRect(0, 0, width, height)
-
 	ctx.drawImage(image, 0, 0)
-	preview.src = canvas.toDataURL()
+
+	teste.src = canvas.toDataURL()
 }
 
-const downloadButton = document.querySelector('#download')
-downloadButton.onclick = () => {
+const saveAllButton = document.querySelector('#save-all')
+saveAllButton.onclick = () => {
 	const a = document.createElement('a')
-	a.download = `${pic.replace(/(.jpg|.png|webp)$/,'')}_0`
+	a.download = `${imageNames[0].replace(/(.jpg|.png|webp)$/,'')}_0`
 	a.href = canvas.toDataURL()
 	a.click()
-	a.download = `${pic.replace(/(.jpg|.png|webp)$/,'')}_1`
+	a.download = `${imageNames[0].replace(/(.jpg|.png|webp)$/,'')}_1`
 	a.click()
 }
 
-// const photoFile = document.getElementById('photo-file')
-// let photoPreview = document.getElementById('photo-preview')
-// let image;
-// let photoName;
-
-// window.addEventListener('DOMContentLoaded', () =>{
-//     photoFile.addEventListener('change', () => {
-//         let file = photoFile.files.item(0)
-//         photoName = file.name;
-
-//         // ler um arquivo
-//         let reader = new FileReader()
-//         reader.readAsDataURL(file)
-//         reader.onload = function(event) {
-//             image = new Image();
-//             image.src = event.target.result
-//             image.onload = onLoadImage
-//         }
-//     })
-// })
-
-// // Selection tool
+// Selection tool
 // const selection = document.getElementById('selection-tool')
 
 // let startX, startY, relativeStartX, relativeStartY,
@@ -120,24 +116,6 @@ downloadButton.onclick = () => {
 // })
 
 
-// // Canvas
-// let canvas = document.createElement('canvas')
-// let ctx = canvas.getContext('2d')
-
-// function onLoadImage() {
-//     const { width, height } = image
-//     canvas.width = width;
-//     canvas.height = height;
-
-//     // limpar o contexto
-//     ctx.clearRect(0, 0, width, height)
-
-//     // desenhar a imagem no contexto
-//     ctx.drawImage(image, 0, 0)
-
-//     photoPreview.src = canvas.toDataURL()
-// }
-
 // // Cortar imagem
 // const cropButton = document.getElementById('crop-image')
 // cropButton.onclick = () => {
@@ -185,13 +163,4 @@ downloadButton.onclick = () => {
 
 //     // mostrar o botão de download
 //     downloadButton.style.display = 'initial'
-// }
-
-// // Download
-// const downloadButton = document.getElementById('download')
-// downloadButton.onclick = function() {
-//     const a = document.createElement('a')
-//     a.download = photoName + '-cropped.png';
-//     a.href = canvas.toDataURL();
-//     a.click()
 // }

@@ -7,9 +7,10 @@ html {
 	justify-content: center;
 	width: 100vw;
 	height: 100vh;
+	overflow-x: hidden;
 }
 
-body {
+main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -17,8 +18,20 @@ body {
 	gap: 10px;
 }
 
-#upload-file {
+#input-file {
 	display: none;
+}
+
+#remove-all, #save-all {
+	display: none;
+}
+
+#preview-content {
+	display: flex;
+	flex-direction: column;
+	width: 90vw;
+	max-width: 500px;
+	gap: 5px;
 }
 
 .button,
@@ -27,32 +40,28 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	max-width: 300px;
-	padding: 8px 16px;
+	width: 250px;
+	padding: 10px;
+	text-align: center;
+	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 80%;
 	font-family: Arial, Helvetica, sans-serif;
-	background: linear-gradient(#7b7b7b 60%,#7b7b7b);
-	border: 2px solid #242424;
+	box-shadow: 0px 1px 2px #000,
+		inset 0px -5px 2px -5px #000;
+	border: none;
 	border-radius: 8px;
-	box-shadow: inset 0px 0px 10px #393939;
 	cursor: pointer;
 }
 
 .button-green {
 	color: #fff;
-	background: linear-gradient(#00a456 60%,#008c35);
-	border: 2px solid #085f33;
-	border-radius: 8px;
-	box-shadow: inset 0px 0px 10px #075e32;
+	background-color: #008c35;
 }
 
 .button-blue {
 	color: #fff;
-	background: linear-gradient(#5779ff 60%,#365cef);
-	border: 2px solid #334a8b;
-	border-radius: 8px;
-	box-shadow: inset 0px 0px 10px #334a8b;
+	background-color: #d32121;
 }
 
 .button:hover,
