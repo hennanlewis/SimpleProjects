@@ -3,11 +3,14 @@ const inputLabel = document.querySelector('#input-label')
 const saveAll = document.querySelector('#save-all')
 const preview = document.querySelector('#preview-content')
 const teste = document.querySelector('#preview')
+const teste2 = document.querySelector('#preview2')
 
 let imageNames = []
-let image
-let canvas = document.createElement('canvas')
-let ctx = canvas.getContext('2d')
+let image, image2
+let canvas1 = document.createElement('canvas')
+let ctx1 = canvas1.getContext('2d')
+let canvas2 = document.createElement('canvas')
+let ctx2 = canvas2.getContext('2d')
 
 window.addEventListener('DOMContentLoaded', () => {
 	fileInput.addEventListener('change', () => {
@@ -29,8 +32,11 @@ const readAndPreview = file => {
 		imageNames.push(file.name.replace(/\.(jpe?g|png|gif)$/i, ''))
 		reader.onload = function() {
 			image = new Image()
+			image2 = new Image()
 			image.title = file.name
 			image.src = reader.result
+			image2.title = file.name
+			image2.src = reader.result
 			createCanvas()
 		}
 	}
@@ -39,22 +45,28 @@ const readAndPreview = file => {
 const createCanvas = () => {
 	let { width, height } = image
 
-	canvas.width = width
-	canvas.height = height
+	canvas1.width = width
+	canvas1.height = height/2
+	canvas2.width = width
+	canvas2.height = height/2
 
-	ctx.clearRect(0, 0, width, height)
-	ctx.drawImage(image, 0, 0)
+	ctx1.clearRect(0, 0, width, height/2)
+	ctx1.drawImage(image, 0, 0)
+	ctx2.clearRect(0, 0, width, height/2)
+	ctx2.drawImage(image2, 0, -height/2)
 
-	teste.src = canvas.toDataURL()
+	teste.src = canvas1.toDataURL()
+	teste2.src = canvas2.toDataURL()
 }
 
 const saveAllButton = document.querySelector('#save-all')
 saveAllButton.onclick = () => {
 	const a = document.createElement('a')
 	a.download = `${imageNames[0].replace(/(.jpg|.png|webp)$/,'')}_0`
-	a.href = canvas.toDataURL()
+	a.href = canvas1.toDataURL()
 	a.click()
 	a.download = `${imageNames[0].replace(/(.jpg|.png|webp)$/,'')}_1`
+	a.href = canvas2.toDataURL()
 	a.click()
 }
 
