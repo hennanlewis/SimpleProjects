@@ -9,14 +9,18 @@
 </head>
 <body>
 	<main>
-		<label id="input-label" for="input-file" class="button-blue">
+		<label id="input-label" for="input-file" class="button">
 			Selecionar imagem
 			<input type="file" id="input-file" name="input-file">
 		</label>
-		<span id="save-all" class="button-blue">Salvar divisões</span>
+		<label id="input-lines-label" for="input-parts" class="button">
+			<input id="input-lines" type="number" name="input-parts" min="1">
+			<span>Adicionar linha</span>
+		</label>
+		<span id="save-all" class="button">Salvar divisões</span>
 		<div id="preview-content">
 			<img id="preview">
-			<img id="preview2">
+			<hr id="line-selection">
 		</div>
 		<script src="app.js"></script>
 	</main>

@@ -1,74 +1,100 @@
 const fileInput = document.querySelector('#input-file')
 const inputLabel = document.querySelector('#input-label')
+const inputLinesLabel = document.querySelector('#input-lines-label')
+const inputLines = document.querySelector('#input-lines')
+const line = document.querySelector('#line-selection')
 const saveAll = document.querySelector('#save-all')
-const preview = document.querySelector('#preview-content')
-const teste = document.querySelector('#preview')
-const teste2 = document.querySelector('#preview2')
+const preview = document.querySelector('#preview')
+
+const canvasImage = document.createElement('canvas')
+const ctxCanvasImage = canvasImage.getContext('2d')
+const canvasLines = document.createElement('canvas')
+const ctxCanvasLines = canvasLines.getContext('2d')
 
 let imageNames = []
-let image, image2
-let canvas1 = document.createElement('canvas')
-let ctx1 = canvas1.getContext('2d')
-let canvas2 = document.createElement('canvas')
-let ctx2 = canvas2.getContext('2d')
+let image
 
 window.addEventListener('DOMContentLoaded', () => {
 	fileInput.addEventListener('change', () => {
-		let files = fileInput.files
-
-		if (files)
-			[].forEach.call(files, readAndPreview)
+		let file = fileInput.files.item(0)
+		readAndPreview(file)
 	})
 
 })
 
-const readAndPreview = file => {
+const events = {
+	mousemove(event) {
+		line.style.display = 'block'
+		line.style.width = preview.width + 'px'
+		line.style.marginTop = event.offsetY + 'px'
+	},
+	mouseup(event) {
+		console.log('Criou linha')
+		ctxCanvasImage.beginPath()
+		ctxCanvasImage.moveTo(0, event.offsetY)
+		ctxCanvasImage.lineTo(image.width, event.offsetY)
+		ctxCanvasImage.stroke()
+		ctxCanvasImage.lineWidth = 10
+		preview.src = canvasImage.toDataURL()
+	},
+}
+
+Object.keys(events)
+.forEach(eventName => {
+    preview.addEventListener(eventName, events[eventName])
+})
+
+const createCanvasLine = (event) => {
+	console.log('Criou linha')
+	ctxCanvasImage.beginPath()
+	ctxCanvasImage.moveTo(0, event.offsetY)
+	ctxCanvasImage.lineTo(image.width, event.offsetY)
+	ctxCanvasImage.stroke()
+	ctxCanvasImage.lineWidth = 10
+	preview.src = canvasImage.toDataURL()
+}
+
+const selectLinePosition = (event) => {
+}
+
+const readAndPreview = (file) => {
 	let reader = new FileReader()
 	reader.readAsDataURL(file)
 
 	if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
 		saveAll.style.display = 'block'
+		inputLinesLabel.style.display = 'block'
 
 		imageNames.push(file.name.replace(/\.(jpe?g|png|gif)$/i, ''))
-		reader.onload = function() {
+		reader.onload = () => {
+			
 			image = new Image()
-			image2 = new Image()
 			image.title = file.name
 			image.src = reader.result
-			image2.title = file.name
-			image2.src = reader.result
-			createCanvas()
+			createCanvasArray()
 		}
 	}
 }
 
-const createCanvas = () => {
+const createCanvasArray = () => {
 	let { width, height } = image
 
-	canvas1.width = width
-	canvas1.height = height/2
-	canvas2.width = width
-	canvas2.height = height/2
+	canvasImage.width = width
+	canvasImage.height = height
 
-	ctx1.clearRect(0, 0, width, height/2)
-	ctx1.drawImage(image, 0, 0)
-	ctx2.clearRect(0, 0, width, height/2)
-	ctx2.drawImage(image2, 0, -height/2)
+	ctxCanvasImage.clearRect(0, 0, width, height)
+	ctxCanvasImage.drawImage(image, 0, 0)
 
-	teste.src = canvas1.toDataURL()
-	teste2.src = canvas2.toDataURL()
+	preview.src = canvasImage.toDataURL()
 }
 
 const saveAllButton = document.querySelector('#save-all')
-saveAllButton.onclick = () => {
+saveAllButton.addEventListener('click', () => {
 	const a = document.createElement('a')
 	a.download = `${imageNames[0].replace(/(.jpg|.png|webp)$/,'')}_0`
 	a.href = canvas1.toDataURL()
 	a.click()
-	a.download = `${imageNames[0].replace(/(.jpg|.png|webp)$/,'')}_1`
-	a.href = canvas2.toDataURL()
-	a.click()
-}
+})
 
 // Selection tool
 // const selection = document.getElementById('selection-tool')
